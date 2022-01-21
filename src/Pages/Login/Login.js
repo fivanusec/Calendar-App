@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
 import { Container } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
-import auth from "../../api/Auth";
 
 export const Login = () => {
   const [redirect, setRedierct] = useState(false);
 
   const responseGoogle = (response) => {
-    console.log(response);
-    const authData = auth(response);
-    if (authData) {
-      sessionStorage.setItem("userData", JSON.stringify(authData.token));
+    if (response) {
+      sessionStorage.setItem("userData", JSON.stringify(response.accessToken));
       setRedierct(true);
     }
   };
@@ -20,7 +17,7 @@ export const Login = () => {
     return (
       <Redirect
         to={{
-          pathname: "fivanusec.xyz",
+          pathname: "/home",
         }}
       />
     );
