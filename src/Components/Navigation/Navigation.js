@@ -5,10 +5,15 @@ import {
   ThemeNavbarText,
   ThemeNavigation,
 } from "./Navigation.style";
-import Button from "../Button";
+import LogoutUser from "../../api/auth/LogoutUser";
+import Button from "../../Components/Button";
+import { Redirect } from "react-router-dom";
 
 export const Navigation = () => {
   const [redirect, setRedirect] = useState(false);
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
   return (
     <ThemeNavigation>
       <Container>
@@ -16,7 +21,14 @@ export const Navigation = () => {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <ThemeNavbarText>
-            <Button variant="outline-light">Logout</Button>
+            <Button
+              onClick={() => {
+                if (LogoutUser()) setRedirect(true);
+              }}
+              variant="outline-light"
+            >
+              Logout
+            </Button>
           </ThemeNavbarText>
         </Navbar.Collapse>
       </Container>
