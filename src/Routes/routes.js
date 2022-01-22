@@ -4,6 +4,7 @@ import Login from "../Pages/Login";
 import Home from "../Pages/Home";
 import PrivateRoute from "../Components/PrivateRoute";
 import PublicRoute from "../Components/PublicRoute";
+import NotFoundPage from "../Pages/NotFoundPage";
 
 export const Routes = () => {
   return (
@@ -16,7 +17,7 @@ export const Routes = () => {
           <Home />
         </PrivateRoute>
         <Route path="*">
-          <div>Not found</div>
+          <NotFoundPage />
         </Route>
       </Switch>
     </BrowserRouter>
