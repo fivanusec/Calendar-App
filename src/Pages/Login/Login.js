@@ -9,6 +9,7 @@ export const Login = () => {
   const [redirect, setRedierct] = useState(false);
 
   const responseGoogle = (response) => {
+    console.log(response);
     if (LoginUser(response)) {
       setRedierct(true);
     }
@@ -36,6 +37,9 @@ export const Login = () => {
         buttonText="Login with Google"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
+        cookiePolicy={"single_host_origin"}
+        accessType="offline"
+        scope="openid email profile https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events.readonly https://www.googleapis.com/auth/calendar.events"
       />
     </Container>
   );
