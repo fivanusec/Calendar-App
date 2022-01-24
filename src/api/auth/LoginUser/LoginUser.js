@@ -3,6 +3,7 @@
 export const LoginUser = (res) => {
   if (res) {
     sessionStorage.setItem("userData", JSON.stringify(res.accessToken));
+    sessionStorage.setItem("tokenId", JSON.stringify(res.tokenId).toString());
     return true;
   }
   return false;

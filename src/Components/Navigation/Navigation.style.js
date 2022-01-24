@@ -16,4 +16,8 @@ export const ThemeBrand = styled(Navbar.Brand)`
 export const ThemeNavbarText = styled(Navbar.Text)`
   color: white !important;
   font-size: 18px;
+  display: flex;
+  flex-direction: row;
+  margin-top: auto;
+  margin-bottom: auto;
 `;

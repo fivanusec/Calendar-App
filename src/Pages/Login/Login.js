@@ -9,7 +9,6 @@ export const Login = () => {
   const [redirect, setRedierct] = useState(false);
 
   const responseGoogle = (response) => {
-    console.log(response);
     if (LoginUser(response)) {
       setRedierct(true);
     }
