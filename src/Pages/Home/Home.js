@@ -105,18 +105,22 @@ export const Home = () => {
           {isCalendarsLoading ? (
             <Spinner animation="border" variant="success" />
           ) : (
-            <Container className="d-flex flex-row">
-              <ReactCalendar
-                className="mr-2"
-                onChange={changeDate}
-                value={date}
-              />
-              <EventTable
-                startDate={startOfDay(date).toISOString()}
-                endDate={endOfDay(date).toISOString()}
-                calendar={calendars?.items[0].id}
-              />
-            </Container>
+            <Row className="d-flex flex-row">
+              <Col>
+                <ReactCalendar
+                  className="mr-2"
+                  onChange={changeDate}
+                  value={date}
+                />
+              </Col>
+              <Col>
+                <EventTable
+                  startDate={startOfDay(date).toISOString()}
+                  endDate={endOfDay(date).toISOString()}
+                  calendar={calendars?.items[0].id}
+                />
+              </Col>
+            </Row>
           )}
         </Container>
       ) : null}
