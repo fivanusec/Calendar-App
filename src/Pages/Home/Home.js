@@ -1,6 +1,5 @@
 /* eslint-disable eqeqeq */
 import HomeLayout from "../../Layouts/Home";
-import ListCalendars from "../../api/calendar/calendars";
 import { Container, Spinner, Row, Col } from "react-bootstrap";
 import { useQuery } from "react-query";
 import Button from "../../Components/Button";
@@ -14,6 +13,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import ModalWindow from "../../Components/Modal";
 import { CreationForm } from "../../Components/CreationForm/CreationForm";
 import { Calendar as ReactCalendar } from "react-calendar";
+import Me from "../../api/auth/Me";
 
 export const Home = () => {
   const [range, setRange] = useState(7);
@@ -23,10 +23,7 @@ export const Home = () => {
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
 
-  const { data: calendars, isLoading: isCalendarsLoading } = useQuery(
-    "calendars",
-    ListCalendars
-  );
+  const { data: user, isLoading } = useQuery("me", Me);
 
   const handleChange = (e) => {
     setRange(e.target.value);
@@ -43,10 +40,7 @@ export const Home = () => {
         handleClose={() => handleClose()}
         title="Kreiraj dogadaj"
       >
-        <CreationForm
-          calendarId={calendars?.items[0].id}
-          closeModal={handleClose}
-        />
+        <CreationForm calendarId={user?.data.email} closeModal={handleClose} />
       </ModalWindow>
       <Container className="mt-4 text-center">
         <Row className="justify-content-md-center d-flex flex-row">
@@ -58,17 +52,8 @@ export const Home = () => {
             </Select>
           </Col>
           <Col>
-            <Button
-              size="sm"
-              style={{
-                backgroundColor: "#53c972",
-                borderColor: "#53c972",
-                marginLeft: "1rem",
-              }}
-              onClick={() => handleShow()}
-            >
-              Kreairaj dogadaj{" "}
-              <FontAwesomeIcon className="ml-4" icon={faPlus} />
+            <Button size="sm" onClick={() => handleShow()}>
+              <FontAwesomeIcon icon={faPlus} />
             </Button>
           </Col>
         </Row>
@@ -76,13 +61,13 @@ export const Home = () => {
       {range == 1 ? (
         <Container className="mt-5 text-center">
           <h2>{range == 1 ? "Danas" : `${range} dana`}</h2>
-          {isCalendarsLoading ? (
+          {isLoading ? (
             <Spinner animation="border" variant="success" />
           ) : (
             <EventTable
               startDate={startOfDay(new Date()).toISOString()}
               endDate={endOfDay(new Date()).toISOString()}
-              calendar={calendars?.items[0].id}
+              calendar={user?.data.email}
             />
           )}
         </Container>
@@ -90,11 +75,11 @@ export const Home = () => {
       {range == 7 ? (
         <Container className="mt-5 text-center">
           <h2>{range == 1 ? "Danas" : `${range} dana`}</h2>
-          {isCalendarsLoading ? (
+          {isLoading ? (
             <Spinner animation="border" variant="success" />
           ) : (
             <Container className="d-flex flex-column">
-              <WeekTable calendars={calendars?.items[0].id} />
+              <WeekTable calendars={user?.data.email} />
             </Container>
           )}
         </Container>
@@ -102,7 +87,7 @@ export const Home = () => {
       {range == 30 ? (
         <Container className="mt-5 text-center">
           <h2>{range == 1 ? "Danas" : `${range} dana`}</h2>
-          {isCalendarsLoading ? (
+          {isLoading ? (
             <Spinner animation="border" variant="success" />
           ) : (
             <Row className="d-flex flex-row">
@@ -117,7 +102,7 @@ export const Home = () => {
                 <EventTable
                   startDate={startOfDay(date).toISOString()}
                   endDate={endOfDay(date).toISOString()}
-                  calendar={calendars?.items[0].id}
+                  calendar={user?.data.email}
                 />
               </Col>
             </Row>

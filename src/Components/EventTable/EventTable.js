@@ -5,6 +5,8 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { EventTableStyle } from "./EventTable.style";
 import { endOfWeek, format, parseISO } from "date-fns";
 import DeleteEvents from "../../api/calendar/events/DeleteEvents";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 export const EventTable = ({
   calendar,
@@ -51,7 +53,7 @@ export const EventTable = ({
                     variant="danger"
                     onClick={() => deleteEvent.mutate(e)}
                   >
-                    Obrisi
+                    <FontAwesomeIcon icon={faTrash} />
                   </Button>
                 </td>
               </tr>
