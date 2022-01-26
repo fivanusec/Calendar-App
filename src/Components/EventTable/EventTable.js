@@ -23,6 +23,10 @@ export const EventTable = ({
       queryClient.invalidateQueries("events");
     },
   });
+
+  const sortedEvents = events?.items.sort((a, b) =>
+    a.start.dateTime.localeCompare(b.start.dateTime)
+  );
   return (
     <>
       {isLoadingEvents ? (
@@ -37,12 +41,10 @@ export const EventTable = ({
             </tr>
           </thead>
           <tbody>
-            {events?.items.map((e) => (
+            {sortedEvents?.map((e) => (
               <tr key={e.id}>
                 <td>{e.summary}</td>
-                <td>
-                  {format(parseISO(e.start.dateTime), "PP HH:mm")}
-                </td>
+                <td>{format(parseISO(e.start.dateTime), "PP HH:mm")}</td>
                 <td>{format(parseISO(e.end.dateTime), "PP HH:mm")}</td>
                 <td>
                   <Button
