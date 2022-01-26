@@ -1,18 +1,20 @@
 import React from "react";
 import { Form, FormControl } from "react-bootstrap";
 import { useField } from "formik";
+import { PropTypes } from "prop-types";
 
-export const InputField = ({ label, textarea, ...props }) => {
+export const InputField = ({ ...props }) => {
   const [field] = useField(props);
 
   return (
     <Form.Group>
-      <Form.Label htmlFor={field.name}>{label}</Form.Label>
+      <Form.Label htmlFor={field.name}>{props.label}</Form.Label>
       <FormControl
-        as={textarea ? "textarea" : "input"}
+        as="input"
         {...field}
         {...props}
         id={field.name}
+        style={{ borderRadius: "24px" }}
         isInvalid={!!props.error}
       />
       {props.error ? (
@@ -25,6 +27,5 @@ export const InputField = ({ label, textarea, ...props }) => {
 };
 
 InputField.propTypes = {
-  label: String,
-  textarea: Boolean,
+  label: PropTypes.string.isRequired,
 };

@@ -1,20 +1,28 @@
 import ListEvents from "../../api/calendar/events/ListEvents";
-import moment from "moment";
 import { Spinner } from "react-bootstrap";
 import Button from "../../Components/Button";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { EventTableStyle } from "./EventTable.style";
+import { endOfWeek, format, parseISO } from "date-fns";
+import DeleteEvents from "../../api/calendar/events/DeleteEvents";
 
 export const EventTable = ({
   calendar,
   count = null,
-  startDate = moment().toISOString(),
-  endDate = moment().endOf("isoWeek").toISOString(),
+  startDate = new Date().toISOString(),
+  endDate = endOfWeek(new Date()).toISOString(),
 }) => {
+  const queryClient = useQueryClient();
   const { data: events, isLoading: isLoadingEvents } = useQuery(
     ["events", calendar, count, startDate, endDate],
     () => ListEvents(calendar, count, startDate, endDate)
   );
+
+  const deleteEvent = useMutation((data) => DeleteEvents(calendar, data.id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries("events");
+    },
+  });
   return (
     <>
       {isLoadingEvents ? (
@@ -32,10 +40,17 @@ export const EventTable = ({
             {events?.items.map((e) => (
               <tr key={e.id}>
                 <td>{e.summary}</td>
-                <td>{moment(e.start.dateTime).format("DD-MM-YYYY HH:mm")}</td>
-                <td>{moment(e.end.dateTime).format("DD-MM-YYYY HH:mm")}</td>
                 <td>
-                  <Button variant="danger">Obrisi</Button>
+                  {format(parseISO(e.start.dateTime), "dd-mm-yyyy HH:mm")}
+                </td>
+                <td>{format(parseISO(e.end.dateTime), "dd-mm-yyyy HH:mm")}</td>
+                <td>
+                  <Button
+                    variant="danger"
+                    onClick={() => deleteEvent.mutate(e)}
+                  >
+                    Obrisi
+                  </Button>
                 </td>
               </tr>
             ))}

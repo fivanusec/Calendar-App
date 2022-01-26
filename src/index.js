@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-calendar/dist/Calendar.css";
+import "./styles/index.css";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 const queryClient = new QueryClient();

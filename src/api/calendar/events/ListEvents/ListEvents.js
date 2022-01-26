@@ -1,11 +1,11 @@
 import axios from "axios";
-import moment from "moment";
+import { endOfDay } from "date-fns";
 
 export const ListEvents = (
   calendar,
   results = null,
-  startTime = moment().toISOString(),
-  endTime = moment().endOf("isoWeek").toISOString()
+  startTime = new Date().toISOString(),
+  endTime = endOfDay(new Date()).toISOString()
 ) => {
   return axios
     .get(

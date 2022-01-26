@@ -11,6 +11,7 @@ export const Button = ({ children, ...props }) => {
       id={props.id}
       onClick={props.onClick}
       disabled={props.disabled}
+      {...props}
     >
       {children}
     </ThemeButton>
