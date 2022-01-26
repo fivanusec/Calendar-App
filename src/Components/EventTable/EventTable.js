@@ -41,9 +41,9 @@ export const EventTable = ({
               <tr key={e.id}>
                 <td>{e.summary}</td>
                 <td>
-                  {format(parseISO(e.start.dateTime), "dd-mm-yyyy HH:mm")}
+                  {format(parseISO(e.start.dateTime), "PP HH:mm")}
                 </td>
-                <td>{format(parseISO(e.end.dateTime), "dd-mm-yyyy HH:mm")}</td>
+                <td>{format(parseISO(e.end.dateTime), "PP HH:mm")}</td>
                 <td>
                   <Button
                     variant="danger"

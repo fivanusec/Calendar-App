@@ -17,7 +17,7 @@ export const Navigation = () => {
   if (redirect) {
     return <Redirect to="/" />;
   }
-  console.log(user);
+
   return (
     <ThemeNavigation>
       <Container>
